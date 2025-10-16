@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_booking')->unique();
 
             // relasi ke user, bus, ama destinationnya
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
