@@ -18,7 +18,7 @@ class BookingController extends Controller
         $bookings = Booking::where('user_id', Auth::id())
             ->with (['bus', 'destination'])
             ->get();
-        return view('booking.mybookings', compact('bookings'));
+        return view('bookings.mybookings', compact('bookings'));
     }
 
     /**
@@ -64,7 +64,7 @@ class BookingController extends Controller
             'status' => 'pending'
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Tiket berhasil dipesan!');
+        return redirect()->route('bookings.mybookings')->with('success', 'Tiket berhasil dipesan!');
     }
 
     public function myBookings()

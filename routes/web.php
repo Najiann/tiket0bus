@@ -22,18 +22,6 @@ Route::resource('destinations', DestinationController::class);
 Route::resource('bookings', BookingController::class)->middleware('auth');
 Route::get('/mybookings', [BookingController::class, 'myBookings'])->name('bookings.mybookings')->middleware('auth');
 
-// Route::get('/dashboard', function () {
-//     if (Auth::check()) {
-//         $bookings = Booking::with(['bus', 'destination'])
-//             ->where('user_id', Auth::id())
-//             ->get();
-//     } else {
-//         $bookings = collect(); // biar tetap bisa dipanggil ->isEmpty()
-//     }
-
-//     return view('dashboard', compact('bookings'));
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
