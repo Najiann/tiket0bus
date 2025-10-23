@@ -42,12 +42,11 @@
       <div class="mb-3">
         <label for="destination_id" class="form-label">Pilih Tujuan</label>
         <select name="destination_id" id="destination_id" class="form-select" required>
-          <option value="">-- Pilih Tujuan --</option>
           @foreach($destinations as $destination)
-            <option value="{{ $destination->id }}">
-              {{ $destination->kota_asal }} → {{ $destination->kota_tujuan }} 
-              ({{ \Carbon\Carbon::parse($destination->tanggal_berangkat)->format('d M Y') }})
-            </option>
+          <option value="{{ $destination->id }}"
+            @if(isset($bus) && $bus->destination_id == $destination->id) selected @endif>
+            {{ $destination->kota_asal }} → {{ $destination->kota_tujuan }}
+          </option>
           @endforeach
         </select>
       </div>

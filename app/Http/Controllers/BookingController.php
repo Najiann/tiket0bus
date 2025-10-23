@@ -24,12 +24,15 @@ class BookingController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        $busId = $request->query('bus_id');
+        $bus = Bus::with('destination')->find($busId); // kalau bus punya relasi destination
         $buses = Bus::all();
         $destinations = Destination::all();
-        return view('bookings.create', compact('buses', 'destinations'));
+
+        return view('bookings.create', compact('bus', 'buses', 'destinations'));
     }
 
     /**
@@ -64,7 +67,8 @@ class BookingController extends Controller
             'status' => 'pending'
         ]);
 
-        return redirect()->route('bookings.mybookings')->with('success', 'Tiket berhasil dipesan!');
+        return redirect()->route('checkout', ['kode_booking' => $kodeBooking])
+                 ->with('success', 'Tiket berhasil dipesan!');
     }
 
     public function myBookings()
@@ -80,6 +84,21 @@ class BookingController extends Controller
         // arahkan ke view yang kamu udah punya
         return view('bookings.mybookings', compact('bookings'));
     }
+
+    public function payNow($kode_booking) 
+    {
+        $booking = Booking::where('kode_booking', $kode_booking)->firstOrFail();
+        
+        if ($booking->status === 'paid') {
+            return redirect('/mybookings')->with('info', 'Tiket ini sudah dibayar sebelumnya.');
+        }
+    
+        $booking->status = 'paid';
+        $booking->save();
+    
+        return redirect('/mybookings')->with('success', 'Pembayaran berhasil! ✅');
+    }
+
 
 
     /**
@@ -107,7 +126,7 @@ class BookingController extends Controller
     {
         // ubah status booking
         $request->validate([
-            'status' => 'required|in:pending,confirmed,cancelled',
+            'status' => 'required|in:pending,confirmed,cancelled,paid',
         ]);
 
         $booking = Booking::findOrFail($id);

@@ -8,6 +8,7 @@ use App\Http\Controllers\DestinationController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DashboardController;
 use App\Models\Booking;
+use App\Http\Controllers\CheckoutController;
 
 Route::get('/', function () {
     $buses = \App\Models\Bus::all();
@@ -21,6 +22,10 @@ Route::resource('buses', BusController::class);
 Route::resource('destinations', DestinationController::class);
 Route::resource('bookings', BookingController::class)->middleware('auth');
 Route::get('/mybookings', [BookingController::class, 'myBookings'])->name('bookings.mybookings')->middleware('auth');
+
+Route::get('/checkout/{kode_booking}', [CheckoutController::class, 'index'])->name('checkout');
+Route::get('/checkout/{kode_booking}', [CheckoutController::class, 'index'])->name('checkout');
+Route::post('/pay/{kode_booking}', [CheckoutController::class, 'payNow'])->name('pay.now');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])

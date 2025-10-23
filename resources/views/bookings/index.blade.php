@@ -3,7 +3,7 @@
 @section('title', 'Pesan Tiket Bus')
 
 @section('content')
-  <h1 class="text-center fw-bold text-danger mb-5">Pilih Tiket Bus Kamu 🚍</h1>
+  <h1 class="text-center fw-bold text-danger mb-5">Pilih Tiket Bus Kamu Di Tripz🚍</h1>
 
   <div class="row g-4">
     @foreach($buses as $bus)
