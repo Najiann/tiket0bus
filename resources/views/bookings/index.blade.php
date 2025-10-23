@@ -21,7 +21,7 @@
 
             {{-- Info Rute --}}
             <p class="text-muted mb-1">Durasi: {{ $bus->destination->durasi }} jam</p>
-            <p class="text-muted mb-1">Jarak: {{ $bus->destination->jarak }}</p>
+            <p class="text-muted mb-1">Jarak: {{ $bus->destination->jarak }} km</p>
 
              {{-- Harga --}}
             <h6 class="fw-bold text-danger mt-3">
